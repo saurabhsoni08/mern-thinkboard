@@ -1,0 +1,505 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --mouse-x: 50vw;
+  --mouse-y: 50vh;
+
+  --neon-green: #00ff9d;
+  --neon-green-soft: rgba(0, 255, 157, 0.12);
+  --neon-green-glow: rgba(0, 255, 157, 0.35);
+}
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #111111;
+}
+
+/* =========================================================
+   HIDE DEFAULT CURSOR
+   ========================================================= */
+
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* =========================================================
+   AMBIENT MOUSE GLOW
+   ========================================================= */
+
+.cursor-glow {
+  position: fixed;
+
+  left: 0;
+  top: 0;
+
+  width: 420px;
+  height: 420px;
+
+  margin-left: -210px;
+  margin-top: -210px;
+
+  border-radius: 9999px;
+
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 157, 0.11) 0%,
+    rgba(0, 255, 157, 0.045) 30%,
+    rgba(0, 255, 157, 0.015) 50%,
+    transparent 72%
+  );
+
+  filter: blur(20px);
+
+  opacity: 0.8;
+
+  will-change: transform;
+
+  transition:
+    width 0.35s ease,
+    height 0.35s ease,
+    margin 0.35s ease,
+    opacity 0.35s ease;
+}
+
+.cursor-glow.cursor-active {
+  width: 520px;
+  height: 520px;
+
+  margin-left: -260px;
+  margin-top: -260px;
+
+  opacity: 1;
+}
+
+/* =========================================================
+   MAIN CURSOR
+   ========================================================= */
+
+.cursor-main {
+  position: fixed;
+
+  left: 50%;
+  top: 50%;
+
+  width: 26px;
+  height: 26px;
+
+  margin-left: -13px;
+  margin-top: -13px;
+
+  will-change: left, top;
+
+  transition:
+    width 0.2s ease,
+    height 0.2s ease,
+    margin 0.2s ease;
+}
+
+/* =========================================================
+   CURSOR CORE
+   ========================================================= */
+
+.cursor-core {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 7px;
+  height: 7px;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 9999px;
+
+  background: var(--neon-green);
+
+  box-shadow:
+    0 0 8px rgba(0, 255, 157, 0.9),
+    0 0 20px rgba(0, 255, 157, 0.65),
+    0 0 40px rgba(0, 255, 157, 0.35);
+
+  transition:
+    width 0.2s ease,
+    height 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* =========================================================
+   CURSOR RING
+   ========================================================= */
+
+.cursor-ring {
+  position: absolute;
+
+  inset: 0;
+
+  border: 1px solid rgba(0, 255, 157, 0.45);
+
+  border-radius: 9999px;
+
+  box-shadow:
+    inset 0 0 10px rgba(0, 255, 157, 0.1),
+    0 0 15px rgba(0, 255, 157, 0.1);
+
+  animation: cursorPulse 2s ease-in-out infinite;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.12s ease-out;
+}
+
+/* =========================================================
+   NORMAL INTERACTIVE HOVER
+   ========================================================= */
+
+.cursor-main.cursor-active {
+  width: 46px;
+  height: 46px;
+
+  margin-left: -23px;
+  margin-top: -23px;
+}
+
+.cursor-main.cursor-active .cursor-ring {
+  border-color: rgba(0, 255, 157, 0.8);
+
+  box-shadow:
+    inset 0 0 15px rgba(0, 255, 157, 0.15),
+    0 0 30px rgba(0, 255, 157, 0.3);
+}
+
+.cursor-main.cursor-active .cursor-core {
+  width: 9px;
+  height: 9px;
+
+  box-shadow:
+    0 0 10px rgba(0, 255, 157, 1),
+    0 0 30px rgba(0, 255, 157, 0.8),
+    0 0 55px rgba(0, 255, 157, 0.4);
+}
+
+/* =========================================================
+   MAGNETIC CURSOR
+   ========================================================= */
+
+.cursor-main.magnetic-cursor {
+  transition:
+    width 0.2s ease,
+    height 0.2s ease,
+    margin 0.2s ease;
+}
+
+.cursor-main.magnetic-cursor .cursor-ring {
+  transform:
+    rotate(var(--magnetic-angle))
+    scaleX(
+      calc(1 + (1 - var(--magnetic-distance)) * 0.75)
+    )
+    scaleY(
+      calc(1 - (1 - var(--magnetic-distance)) * 0.25)
+    );
+
+  border-color: rgba(0, 255, 157, 0.95);
+
+  box-shadow:
+    0 0 20px rgba(0, 255, 157, 0.3),
+    0 0 45px rgba(0, 255, 157, 0.12),
+    inset 0 0 15px rgba(0, 255, 157, 0.12);
+}
+
+.cursor-main.magnetic-cursor .cursor-core {
+  width: 10px;
+  height: 10px;
+
+  box-shadow:
+    0 0 10px rgba(0, 255, 157, 1),
+    0 0 25px rgba(0, 255, 157, 0.9),
+    0 0 50px rgba(0, 255, 157, 0.5);
+}
+
+/* =========================================================
+   MAGNETIC BEAM
+   ========================================================= */
+
+.cursor-magnetic-line {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 35px;
+  height: 1px;
+
+  transform-origin: left center;
+
+  transform:
+    rotate(var(--magnetic-angle))
+    scaleX(calc(1 - var(--magnetic-distance)));
+
+  background: linear-gradient(
+    90deg,
+    rgba(0, 255, 157, 0.65),
+    rgba(0, 255, 157, 0.15),
+    transparent
+  );
+
+  box-shadow: 0 0 8px rgba(0, 255, 157, 0.2);
+
+  opacity: 0;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.12s ease-out;
+}
+
+.cursor-main.magnetic-cursor .cursor-magnetic-line {
+  opacity: 1;
+}
+
+/* =========================================================
+   CURSOR TRAIL
+   ========================================================= */
+
+.cursor-trail {
+  position: fixed;
+
+  left: 0;
+  top: 0;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 9999px;
+
+  background: rgba(0, 255, 157, 0.65);
+
+  box-shadow:
+    0 0 8px rgba(0, 255, 157, 0.6),
+    0 0 18px rgba(0, 255, 157, 0.25);
+
+  will-change: left, top, transform;
+
+  opacity: 0;
+}
+
+/* =========================================================
+   PAGE SPOTLIGHT
+   ========================================================= */
+
+@media (pointer: fine) {
+  body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 9990;
+
+    background: radial-gradient(
+      500px circle at var(--mouse-x) var(--mouse-y),
+      rgba(0, 255, 157, 0.045),
+      transparent 70%
+    );
+
+    mix-blend-mode: screen;
+  }
+}
+
+/* =========================================================
+   CURSOR PULSE
+   ========================================================= */
+
+@keyframes cursorPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   NOTE CARD MOUSE GLOW
+   ========================================================= */
+
+.cursor-card {
+  position: relative;
+
+  overflow: hidden;
+
+  isolation: isolate;
+}
+
+.cursor-card::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  z-index: 0;
+
+  opacity: 0;
+
+  background: radial-gradient(
+    350px circle at var(--mouse-x) var(--mouse-y),
+    rgba(0, 255, 157, 0.12),
+    rgba(0, 255, 157, 0.035) 35%,
+    transparent 65%
+  );
+
+  transition: opacity 0.3s ease;
+}
+
+.cursor-card:hover::before {
+  opacity: 1;
+}
+
+/* Keep card content above glow */
+
+.cursor-card > * {
+  position: relative;
+
+  z-index: 1;
+}
+
+/* =========================================================
+   MAGNETIC ELEMENT GLOW
+   ========================================================= */
+
+[data-magnetic] {
+  position: relative;
+}
+
+/* =========================================================
+   PRIMARY BUTTON GLOW
+   ========================================================= */
+
+button:hover,
+a:hover {
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* =========================================================
+   TEXT SELECTION
+   ========================================================= */
+
+::selection {
+  background: rgba(0, 255, 157, 0.25);
+
+  color: white;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 157, 0.2);
+
+  border-radius: 9999px;
+
+  border: 2px solid #111111;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 157, 0.4);
+}
+
+/* Firefox */
+
+html {
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(0, 255, 157, 0.25)
+    #111111;
+}
+
+/* =========================================================
+   FOCUS STATES
+   ========================================================= */
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+/* =========================================================
+   MOBILE / TOUCH DEVICES
+   ========================================================= */
+
+@media (pointer: coarse) {
+  .cursor-glow,
+  .cursor-main,
+  .cursor-trail {
+    display: none !important;
+  }
+
+  body::before {
+    display: none;
+  }
+
+  * {
+    cursor: auto !important;
+  }
+}
+
+/* =========================================================
+   REDUCE MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .cursor-ring {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

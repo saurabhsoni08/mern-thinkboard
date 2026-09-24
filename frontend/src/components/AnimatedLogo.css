@@ -1,0 +1,345 @@
+.noteslab-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  user-select: none;
+  transition: transform 0.3s ease;
+}
+
+.noteslab-logo:hover {
+  transform: translateY(-1px);
+}
+
+/* =========================
+   LOGO MARK
+========================= */
+
+.noteslab-mark {
+  position: relative;
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main SVG */
+
+.noteslab-svg {
+  position: relative;
+  z-index: 2;
+
+  width: 58px;
+  height: 58px;
+
+  overflow: visible;
+
+  filter:
+    drop-shadow(0 0 6px rgba(0, 255, 157, 0.25))
+    drop-shadow(0 0 18px rgba(0, 255, 157, 0.08));
+
+  transition:
+    transform 0.4s ease,
+    filter 0.4s ease;
+}
+
+.noteslab-logo:hover .noteslab-svg {
+  transform: scale(1.05);
+
+  filter:
+    drop-shadow(0 0 9px rgba(0, 255, 157, 0.45))
+    drop-shadow(0 0 25px rgba(0, 255, 157, 0.15));
+}
+
+/* =========================
+   DOCUMENT
+========================= */
+
+.document-outline {
+  stroke: rgba(0, 255, 157, 0.9);
+  stroke-width: 2;
+  fill: rgba(0, 255, 157, 0.025);
+
+  stroke-linejoin: round;
+
+  transition:
+    stroke 0.3s ease,
+    fill 0.3s ease;
+}
+
+.noteslab-logo:hover .document-outline {
+  stroke: #00ff9d;
+  fill: rgba(0, 255, 157, 0.055);
+}
+
+/* Folded corner */
+
+.document-fold {
+  fill: rgba(0, 255, 157, 0.14);
+  stroke: #00ff9d;
+  stroke-width: 1.5;
+
+  stroke-linejoin: round;
+
+  transition:
+    fill 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.noteslab-logo:hover .document-fold {
+  fill: rgba(0, 255, 157, 0.28);
+}
+
+/* =========================
+   DOCUMENT TEXT
+========================= */
+
+.document-line {
+  stroke: rgba(255, 255, 255, 0.32);
+  stroke-width: 2;
+  stroke-linecap: round;
+
+  transition:
+    stroke 0.3s ease,
+    stroke-width 0.3s ease;
+}
+
+.noteslab-logo:hover .document-line {
+  stroke: rgba(255, 255, 255, 0.55);
+}
+
+.line-one {
+  animation: linePulse 3s ease-in-out infinite;
+}
+
+.line-two {
+  animation: linePulse 3s ease-in-out 0.35s infinite;
+}
+
+/* =========================
+   N MARK
+========================= */
+
+.logo-n {
+  stroke: #00ff9d;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  filter:
+    drop-shadow(0 0 4px rgba(0, 255, 157, 0.8))
+    drop-shadow(0 0 10px rgba(0, 255, 157, 0.35));
+
+  stroke-dasharray: 90;
+  stroke-dashoffset: 90;
+
+  animation: drawN 1.8s ease forwards;
+}
+
+.noteslab-logo:hover .logo-n {
+  filter:
+    drop-shadow(0 0 6px rgba(0, 255, 157, 1))
+    drop-shadow(0 0 15px rgba(0, 255, 157, 0.5));
+}
+
+/* Bottom accent */
+
+.document-bottom {
+  stroke: rgba(0, 255, 157, 0.35);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+/* =========================
+   GLOW
+========================= */
+
+.logo-glow {
+  position: absolute;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  background: rgba(0, 255, 157, 0.12);
+
+  filter: blur(18px);
+
+  animation: logoGlow 3.5s ease-in-out infinite;
+
+  pointer-events: none;
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.logo-dot {
+  position: absolute;
+
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+
+  background: #00ff9d;
+
+  box-shadow:
+    0 0 5px rgba(0, 255, 157, 0.9),
+    0 0 10px rgba(0, 255, 157, 0.4);
+
+  pointer-events: none;
+}
+
+.dot-one {
+  top: 8px;
+  right: 7px;
+
+  animation: particleFloat 3s ease-in-out infinite;
+}
+
+.dot-two {
+  bottom: 12px;
+  left: 5px;
+
+  width: 2px;
+  height: 2px;
+
+  animation: particleFloat 3.5s ease-in-out 0.8s infinite;
+}
+
+.dot-three {
+  top: 26px;
+  left: 2px;
+
+  width: 2px;
+  height: 2px;
+
+  animation: particleFloat 4s ease-in-out 1.4s infinite;
+}
+
+/* =========================
+   WORDMARK
+========================= */
+
+.noteslab-wordmark {
+  display: flex;
+  align-items: center;
+
+  font-family: monospace;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  letter-spacing: -1.5px;
+  line-height: 1;
+
+  color: #f5f5f5;
+}
+
+.wordmark-lab {
+  color: #00ff9d;
+
+  text-shadow:
+    0 0 10px rgba(0, 255, 157, 0.12);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes drawN {
+  0% {
+    stroke-dashoffset: 90;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes linePulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes logoGlow {
+  0%,
+  100% {
+    transform: scale(0.85);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+}
+
+@keyframes particleFloat {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.25;
+  }
+
+  50% {
+    transform: translate(3px, -5px);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 640px) {
+  .noteslab-logo {
+    gap: 8px;
+  }
+
+  .noteslab-mark {
+    width: 48px;
+    height: 48px;
+  }
+
+  .noteslab-svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .noteslab-wordmark {
+    font-size: 24px;
+    letter-spacing: -1px;
+  }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .noteslab-logo,
+  .noteslab-svg,
+  .logo-glow,
+  .logo-n,
+  .line-one,
+  .line-two,
+  .logo-dot {
+    animation: none;
+    transition: none;
+  }
+
+  .logo-n {
+    stroke-dashoffset: 0;
+  }
+}
