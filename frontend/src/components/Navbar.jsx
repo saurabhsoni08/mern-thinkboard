@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { PlusIcon, LogInIcon, LogOutIcon, UserIcon } from "lucide-react";
 
 import AnimatedLogo from "./AnimatedLogo";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../Context/AuthContext";
 import toast from "react-hot-toast";
 
 const Navbar = () => {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { LockKeyholeIcon, LogInIcon, MailIcon } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../Context/AuthContext";
 
 const LoginPage = () => {
   const { login } = useAuth();
